@@ -13,13 +13,13 @@ def count():
     else:
         print(given_name)
         # Name of the Counter
-        name_place = ctk.CTkLabel(title_place, text= given_name )
+        name_place = ctk.CTkLabel(title_place, text= given_name, font = ctk.CTkFont('roboto', size = 15))
         name_place.pack(pady = 1.5)
 
         # Time that the Button is Pressed
         date = datetime.now()
         current_time = date.strftime('%H:%M:%S')
-        timetable = ctk.CTkLabel(time_place, text = current_time)
+        timetable = ctk.CTkLabel(time_place, text = current_time, font = ctk.CTkFont('roboto', size = 15))
         timetable.pack(pady = 1.5)
 
 
@@ -50,6 +50,8 @@ text = "+",
 font = ctk.CTkFont('roboto', size = 30),
 command = count,
 width = 50,
+fg_color = 'black',
+hover_color = 'purple',
 border_width = 2,
 border_color = 'black',
 corner_radius = 500)
