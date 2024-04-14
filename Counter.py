@@ -1,33 +1,36 @@
 import customtkinter as ctk
 from tkinter import *
 from datetime import datetime
-
-
+import keyboard
 
 def count():
     given_name = counter_name.get()
     if not given_name.strip():
-        no_text = ctk.CTkLabel(window, text = 'Please insert a text')
+        no_text = ctk.CTkLabel(window, text = 'Please insert a Title')
         no_text.pack(pady = 2)
         window.after(2000, no_text.destroy)
     else:
         print(given_name)
         # Name of the Counter
         name_place = ctk.CTkLabel(title_place, text= given_name, font = ctk.CTkFont('roboto', size = 15))
-        name_place.pack(pady = 1.5)
+        name_place.pack(pady = 5)
+        counter_name.delete(0, END)
 
         # Time that the Button is Pressed
         date = datetime.now()
         current_time = date.strftime('%H:%M:%S')
         timetable = ctk.CTkLabel(time_place, text = current_time, font = ctk.CTkFont('roboto', size = 15))
-        timetable.pack(pady = 1.5)
+        timetable.pack(pady = 5)
 
+
+
+def key_pressed(enter):
+        count()
 
 window = ctk.CTk()
 window.title('Counter')
 window.geometry('800x700')
-window.grid_rowconfigure(0, weight= 1)
-window.grid_columnconfigure((0, 1), weight= 1)
+window.resizable(False,False)
 
 #title
 title = ctk.CTkLabel(window, text= 'Counter', font = ctk.CTkFont('roboto', size = 50))
@@ -59,21 +62,18 @@ corner_radius = 500)
 button.pack(pady = 20)
 
 # Separation Frame 1
-title_place = ctk.CTkFrame(window,
+title_place = ctk.CTkScrollableFrame(window,
 width = 370, height = 370, 
-border_width = 2,
 border_color = 'black',)
-title_place.place(x = 0, y = 330)
-title_place.pack_propagate(False)
+title_place.place( x = 0, y = 330)
+
 
 # Separation Frame 2
-time_place = ctk.CTkFrame(window,
+time_place = ctk.CTkScrollableFrame(window,
 width = 370, height = 370,
-border_width = 2,
 border_color = 'black')
 time_place.place(x = 430, y = 330)
-time_place.pack_propagate(False)
 
-
+keyboard.on_press_key('Return', key_pressed)
 
 window.mainloop()
