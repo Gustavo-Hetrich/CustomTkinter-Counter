@@ -9,7 +9,7 @@
 - You can give a title to a timestamp
 - It will display the title you had given and the time that the button was pressed
 
-This project still in an early development, please be patience about UI errors :)
+This project still in an early development, please be patient about UI errors :)
 
 Things i plan to add in the near future:
 >1 - checks if the title name arealdy exist and adds a number after, for example: 'title 1' 'title 2'
