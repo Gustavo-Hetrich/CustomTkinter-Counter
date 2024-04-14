@@ -7,21 +7,15 @@ def count():
     given_name = counter_name.get()
     if not given_name.strip():
         no_text = ctk.CTkLabel(window, text = 'Please insert a Title')
-        no_text.pack(pady = 2)
+        no_text.grid(column = 0, sticky = 's')
         window.after(2000, no_text.destroy)
     else:
         print(given_name)
         # Name of the Counter
-        name_place = ctk.CTkLabel(title_place, text= given_name, font = ctk.CTkFont('roboto', size = 15))
+        date = datetime.now()
+        name_place = ctk.CTkLabel(title_place, text= given_name + "....." + date.strftime('%H:%M:%S'), font = ctk.CTkFont('roboto', size = 15))
         name_place.pack(pady = 5)
         counter_name.delete(0, END)
-
-        # Time that the Button is Pressed
-        date = datetime.now()
-        current_time = date.strftime('%H:%M:%S')
-        timetable = ctk.CTkLabel(time_place, text = current_time, font = ctk.CTkFont('roboto', size = 15))
-        timetable.pack(pady = 5)
-
 
 
 def key_pressed(enter):
@@ -32,9 +26,14 @@ window.title('Counter')
 window.geometry('800x700')
 window.resizable(False,False)
 
+# Grid System
+window.columnconfigure(0, weight = 1)
+window.columnconfigure(1, weight = 1)
+window.rowconfigure(0, weight = 1)
+
 #title
-title = ctk.CTkLabel(window, text= 'Counter', font = ctk.CTkFont('roboto', size = 50))
-title.pack(pady = 10)
+title = ctk.CTkLabel(window, text= 'Counter', font = ctk.CTkFont('roboto', size = 50), fg_color = 'purple')
+title.grid(column = 0, sticky = 'nwe')
 
 
 #Input Field
@@ -44,7 +43,7 @@ font = ctk.CTkFont('roboto', size = 15),
 width= 200,
 height= 50)
 
-counter_name.pack(pady = 30)
+counter_name.grid(row = 0, column = 0, sticky = 'n', pady = 100)
 
 # Confirm Button
 button = ctk.CTkButton(
@@ -59,20 +58,14 @@ border_width = 2,
 border_color = 'black',
 corner_radius = 500)
 
-button.pack(pady = 20)
+button.grid(row = 0, column = 0, sticky = 'n', pady = 200)
 
 # Separation Frame 1
 title_place = ctk.CTkScrollableFrame(window,
-width = 370, height = 370, 
+width = 370, height = 1000, 
 border_color = 'black',)
-title_place.place( x = 0, y = 330)
+title_place.grid( row = 0, column = 1, sticky = 'nswe')
 
-
-# Separation Frame 2
-time_place = ctk.CTkScrollableFrame(window,
-width = 370, height = 370,
-border_color = 'black')
-time_place.place(x = 430, y = 330)
 
 keyboard.on_press_key('Return', key_pressed)
 
