@@ -13,9 +13,18 @@ def count():
         print(given_name)
         # Name of the Counter
         date = datetime.now()
-        name_place = ctk.CTkLabel(title_place, text = given_name + (' ' * 50)  + date.strftime('%H:%M:%S'), font = ctk.CTkFont('roboto', size = 20))
-        name_place.pack(pady = 5)
+        time_of_press = date.strftime('%H:%M:%S')
+        title_place = ctk.CTkLabel(title_frame,text = given_name, pady = 10, font = ctk.CTkFont('roboto', size = 20))
+        title_place.pack(anchor = 'n', side = 'top')
+        time_place = ctk.CTkLabel(time_frame,text = time_of_press, pady = 10, font = ctk.CTkFont('roboto', size = 20))
+        time_place.pack(anchor = 'n', side = 'top')
         counter_name.delete(0, END)
+
+def clear():
+    for widget in title_frame.winfo_children():
+            widget.destroy()
+    for widget in time_frame.winfo_children():
+            widget.destroy()
 
 def changemode():
     val = appearance.get()
@@ -34,7 +43,6 @@ def key_pressed(enter):
 window = ctk.CTk()
 window.title('Counter')
 window.geometry('800x700')
-window.resizable(False,False)
 
 # Grid System
 window.columnconfigure(0, weight = 1)
@@ -47,7 +55,7 @@ title.grid(column = 0, sticky = 'nwe')
 
 
 # Dark and Light Mode
-appearance = ctk.CTkSwitch(window, text = 'Change Mode',
+appearance = ctk.CTkSwitch(window, text = 'Change Theme',
 font = ctk.CTkFont('roboto', size = 10),
 fg_color = 'purple',
 progress_color = 'orange',
@@ -81,12 +89,39 @@ corner_radius = 500)
 
 button.grid(row = 0, column = 0, sticky = 'n', pady = 200)
 
-# Separation Frame 1
-title_place = ctk.CTkScrollableFrame(window,
+# Clear result Button
+clear_result = ctk.CTkButton(
+window,
+text = "Clear",
+font = ctk.CTkFont('roboto', size = 30),
+command = clear,
+width = 50,
+fg_color = 'black',
+hover_color = 'purple',
+border_width = 2,
+border_color = 'black',
+corner_radius = 500)
+
+clear_result.grid(row = 0, column = 0, sticky = 'n', pady = 260)
+
+# Result Frame
+result = ctk.CTkScrollableFrame(window,
 width = 370, height = 1000, 
 border_color = 'black',)
-title_place.grid( row = 0, column = 1, sticky = 'nswe')
+result.grid( row = 0, column = 1, sticky = 'nswe')
 
+#column in the frame (title and time)
+result.columnconfigure(0, weight = 1)
+result.columnconfigure(1, weight = 1)
+
+# Title Frame
+title_frame = ctk.CTkFrame(result, width = (370/2), height = 1000)
+title_frame.grid(row =0, column = 0, sticky = 'n')
+title_frame.propagate(False)
+# Time Frame
+time_frame = ctk.CTkFrame(result, width = (370/2),  height = 1000)
+time_frame.grid(row =0, column = 1, sticky = 'n')
+time_frame.propagate(False)
 
 keyboard.on_press_key('Return', key_pressed)
 
