@@ -1,6 +1,6 @@
-# CustomTkinter Counter
+# TimeStamper
 
-## A Counter Made With Python and CustomTkinter
+## A timestamp software With Python and CustomTkinter
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
@@ -16,10 +16,12 @@ Things i plan to add in the near future:
 
 >2 - Add a light and dark mode (dark - purple and black) (light - orange and white)
 
->3 - Fix the grid system
+>3 - Fix the grid system ✅
 
->4 - Fix the scrollframes
+>4 - Fix the scrollframes ✅
 
 >5 - give the UI a modern and professional look
+
+>6 - Grab all the data and turn into mathematical graphics
 
 ¯\\\_(ツ)_/¯

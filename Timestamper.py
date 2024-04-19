@@ -3,91 +3,62 @@ from tkinter import *
 from datetime import datetime
 import keyboard
 
-counter = 1
-# New timestamps
-list_one = []
-# Repeated timestamps
-list_two = []
-
 def count():
-    global counter
-    given_name = timestamp_name.get()
-    timestamp = given_name
+    given_name = counter_name.get()
     if not given_name.strip():
         no_text = ctk.CTkLabel(window, text = 'Please insert a Title')
         no_text.grid(row = 0, column = 0, sticky = '')
         window.after(2000, no_text.destroy)
     else:
-        if given_name in list_one:
-            timestamp = given_name + str(counter)
-            list_two.append(timestamp)
-            print(list_two)
-            counter += 1
-            print(counter)
-        elif timestamp in list_two:
-            timestamp = given_name + str(counter)
-            list_two.append(timestamp)
-            print(list_two)
-            counter += 1
-            print(counter)
-        else:
-            timestamp = given_name
-            list_one.append(given_name)
-            print(list_one)
-        
-        # Name of the timestampe
+        print(given_name)
+        # Name of the Counter
         date = datetime.now()
         time_of_press = date.strftime('%H:%M:%S')
-        title_place = ctk.CTkLabel(title_frame,text = timestamp, pady = 10, font = ctk.CTkFont('helvetica', size = 20))
-        title_place.pack(anchor = 'n', side = 'bottom')
-        time_place = ctk.CTkLabel(time_frame,text = time_of_press, pady = 10, font = ctk.CTkFont('helvetica', size = 20))
-        time_place.pack(anchor = 'n', side = 'bottom')
-        timestamp_name.delete(0, END)
+        title_place = ctk.CTkLabel(title_frame,text = given_name, pady = 10, font = ctk.CTkFont('roboto', size = 20))
+        title_place.pack(anchor = 'n', side = 'top')
+        time_place = ctk.CTkLabel(time_frame,text = time_of_press, pady = 10, font = ctk.CTkFont('roboto', size = 20))
+        time_place.pack(anchor = 'n', side = 'top')
+        counter_name.delete(0, END)
 
 def clear():
     for widget in title_frame.winfo_children():
             widget.destroy()
     for widget in time_frame.winfo_children():
             widget.destroy()
-    clared = ctk.CTkLabel()
-
-# Script for changing themes
-color = ['orange', 'purple']
 
 def changemode():
     val = appearance.get()
     if val:
          ctk.set_appearance_mode('dark')
-         color[1]
     else:
          ctk.set_appearance_mode('light')
-         color[0]
     
+
+
 
 def key_pressed(enter):
         count()
 
 # Window Configuration
 window = ctk.CTk()
-window.title('TimeStamper')
+window.title('Counter')
 window.geometry('800x700')
 
 # Grid System
 window.columnconfigure(0, weight = 1)
-window.columnconfigure(1, weight = 3)
+window.columnconfigure(1, weight = 1)
 window.rowconfigure(0, weight = 1)
 
 #title
-title = ctk.CTkLabel(window, text= 'TimeStamper', font = ctk.CTkFont('helvetica', size = 40), fg_color = color, pady = 20)
+title = ctk.CTkLabel(window, text= 'Counter', font = ctk.CTkFont('roboto', size = 40))
 title.grid(column = 0, sticky = 'nwe')
 
 
 # Dark and Light Mode
 appearance = ctk.CTkSwitch(window, text = 'Change Theme',
-font = ctk.CTkFont('helvetica', size = 20),
+font = ctk.CTkFont('roboto', size = 10),
 fg_color = 'purple',
 progress_color = 'orange',
-height = 50,
 onvalue = 0,
 offvalue = 1,
 command = changemode,)
@@ -95,43 +66,43 @@ appearance.grid(row = 0, column = 0, sticky = 's')
 
 
 #Input Field
-timestamp_name = ctk.CTkEntry(window,
+counter_name = ctk.CTkEntry(window,
 placeholder_text= 'Title', 
-font = ctk.CTkFont('helvetica', size = 15),
+font = ctk.CTkFont('roboto', size = 15),
 width= 200,
-height= 50,
-corner_radius = 500)
+height= 50)
 
-timestamp_name.grid(row = 0, column = 0, sticky = 'n', pady = 150)
+counter_name.grid(row = 0, column = 0, sticky = 'n', pady = 100)
 
 # Confirm Button
 button = ctk.CTkButton(
 window,
 text = "+",
-font = ctk.CTkFont('helvetica', size = 30),
+font = ctk.CTkFont('roboto', size = 30),
 command = count,
 width = 50,
 fg_color = 'black',
-hover_color = color,
+hover_color = 'purple',
 border_width = 2,
 border_color = 'black',
 corner_radius = 500)
 
-button.grid(row = 0, column = 0, sticky = 'n', pady = 230)
+button.grid(row = 0, column = 0, sticky = 'n', pady = 200)
 
 # Clear result Button
 clear_result = ctk.CTkButton(
 window,
 text = "Clear",
-font = ctk.CTkFont('helvetica', size = 30),
+font = ctk.CTkFont('roboto', size = 30),
 command = clear,
+width = 50,
 fg_color = 'black',
-hover_color = color,
+hover_color = 'purple',
 border_width = 2,
 border_color = 'black',
 corner_radius = 500)
 
-clear_result.grid(row = 0, column = 0, sticky = 'n', pady = 300)
+clear_result.grid(row = 0, column = 0, sticky = 'n', pady = 260)
 
 # Result Frame
 result = ctk.CTkScrollableFrame(window,
@@ -143,15 +114,14 @@ result.grid( row = 0, column = 1, sticky = 'nswe')
 result.columnconfigure(0, weight = 1)
 result.columnconfigure(1, weight = 1)
 
-
 # Title Frame
 title_frame = ctk.CTkFrame(result, width = (370/2), height = 1000)
 title_frame.grid(row =0, column = 0, sticky = 'n')
-
+title_frame.propagate(False)
 # Time Frame
 time_frame = ctk.CTkFrame(result, width = (370/2),  height = 1000)
 time_frame.grid(row =0, column = 1, sticky = 'n')
-
+time_frame.propagate(False)
 
 keyboard.on_press_key('Return', key_pressed)
 
